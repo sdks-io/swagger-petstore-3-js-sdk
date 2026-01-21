@@ -12,8 +12,8 @@ import {
   optional,
   Schema,
   string,
-} from '../schema';
-import { Address, addressSchema } from './address';
+} from '../schema.js';
+import { Address, addressSchema } from './address.js';
 
 export interface Customer {
   id?: bigint;
@@ -21,8 +21,10 @@ export interface Customer {
   address?: Address[];
 }
 
-export const customerSchema: Schema<Customer> = object({
-  id: ['id', optional(bigint())],
-  username: ['username', optional(string())],
-  address: ['address', optional(array(lazy(() => addressSchema)))],
-});
+export const customerSchema: Schema<Customer> = lazy(() =>
+  object({
+    id: ['id', optional(bigint())],
+    username: ['username', optional(string())],
+    address: ['address', optional(array(addressSchema))],
+  })
+);

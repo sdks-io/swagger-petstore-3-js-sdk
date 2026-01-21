@@ -9,7 +9,7 @@
 
 | Name |
 |  --- |
-| `available` |
-| `pending` |
-| `sold` |
+| `Available` |
+| `Pending` |
+| `Sold` |
 

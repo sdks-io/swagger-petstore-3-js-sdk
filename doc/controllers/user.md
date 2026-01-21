@@ -25,6 +25,8 @@ const userController = new UserController(client);
 
 This can only be done by the logged in user.
 
+:information_source: **Note** This endpoint does not require authentication.
+
 ```ts
 async createUser(
   id?: bigint,
@@ -55,7 +57,7 @@ async createUser(
 
 ## Response Type
 
-[`User`](../../doc/models/user.md)
+This method returns an [`ApiResponse`](../../doc/api-response.md) instance. The `result` property of this instance returns the response data which is of type [`User`](../../doc/models/user.md).
 
 ## Example Usage
 
@@ -77,7 +79,7 @@ const phone = '12345';
 const userStatus = 1;
 
 try {
-  const { result, ...httpResponse } = await userController.createUser(
+  const response = await userController.createUser(
     id,
     username,
     firstName,
@@ -87,12 +89,24 @@ try {
     phone,
     userStatus
   );
-  // Get more response info...
-  // const { statusCode, headers } = httpResponse;
+
+  // Extracting fully parsed response body.
+  console.log(response.result);
+
+  // Extracting response status code.
+  console.log(response.statusCode);
+  // Extracting response headers.
+  console.log(response.headers);
+  // Extracting response body of type `string | Stream`
+  console.log(response.body);
 } catch (error) {
   if (error instanceof ApiError) {
-    const errors = error.result;
-    // const { statusCode, headers } = error;
+    // Extracting response error status code.
+    console.log(error.statusCode);
+    // Extracting response error headers.
+    console.log(error.headers);
+    // Extracting response error body of type `string | Stream`.
+    console.log(error.body);
   }
 }
 ```
@@ -101,6 +115,8 @@ try {
 # Create Users With List Input
 
 Creates list of users with given input array
+
+:information_source: **Note** This endpoint does not require authentication.
 
 ```ts
 async createUsersWithListInput(
@@ -118,19 +134,44 @@ async createUsersWithListInput(
 
 ## Response Type
 
-[`User`](../../doc/models/user.md)
+This method returns an [`ApiResponse`](../../doc/api-response.md) instance. The `result` property of this instance returns the response data which is of type [`User`](../../doc/models/user.md).
 
 ## Example Usage
 
 ```ts
+const body: User[] = [
+  {
+    id: BigInt(10),
+    username: 'theUser',
+    firstName: 'John',
+    lastName: 'James',
+    email: 'john@email.com',
+    password: '12345',
+    phone: '12345',
+    userStatus: 1,
+  }
+];
+
 try {
-  const { result, ...httpResponse } = await userController.createUsersWithListInput();
-  // Get more response info...
-  // const { statusCode, headers } = httpResponse;
+  const response = await userController.createUsersWithListInput(body);
+
+  // Extracting fully parsed response body.
+  console.log(response.result);
+
+  // Extracting response status code.
+  console.log(response.statusCode);
+  // Extracting response headers.
+  console.log(response.headers);
+  // Extracting response body of type `string | Stream`
+  console.log(response.body);
 } catch (error) {
   if (error instanceof ApiError) {
-    const errors = error.result;
-    // const { statusCode, headers } = error;
+    // Extracting response error status code.
+    console.log(error.statusCode);
+    // Extracting response error headers.
+    console.log(error.headers);
+    // Extracting response error body of type `string | Stream`.
+    console.log(error.body);
   }
 }
 ```
@@ -144,7 +185,7 @@ try {
 
 # Login User
 
-Logs user into the system
+:information_source: **Note** This endpoint does not require authentication.
 
 ```ts
 async loginUser(
@@ -164,19 +205,31 @@ async loginUser(
 
 ## Response Type
 
-`string`
+This method returns an [`ApiResponse`](../../doc/api-response.md) instance. The `result` property of this instance returns the response data which is of type `string`.
 
 ## Example Usage
 
 ```ts
 try {
-  const { result, ...httpResponse } = await userController.loginUser();
-  // Get more response info...
-  // const { statusCode, headers } = httpResponse;
+  const response = await userController.loginUser();
+
+  // Extracting fully parsed response body.
+  console.log(response.result);
+
+  // Extracting response status code.
+  console.log(response.statusCode);
+  // Extracting response headers.
+  console.log(response.headers);
+  // Extracting response body of type `string | Stream`
+  console.log(response.body);
 } catch (error) {
   if (error instanceof ApiError) {
-    const errors = error.result;
-    // const { statusCode, headers } = error;
+    // Extracting response error status code.
+    console.log(error.statusCode);
+    // Extracting response error headers.
+    console.log(error.headers);
+    // Extracting response error body of type `string | Stream`.
+    console.log(error.body);
   }
 }
 ```
@@ -190,7 +243,7 @@ try {
 
 # Logout User
 
-Logs out current logged in user session
+:information_source: **Note** This endpoint does not require authentication.
 
 ```ts
 async logoutUser(
@@ -206,19 +259,31 @@ async logoutUser(
 
 ## Response Type
 
-`void`
+This method returns an [`ApiResponse`](../../doc/api-response.md) instance.
 
 ## Example Usage
 
 ```ts
 try {
-  const { result, ...httpResponse } = await userController.logoutUser();
-  // Get more response info...
-  // const { statusCode, headers } = httpResponse;
+  const response = await userController.logoutUser();
+
+  // Extracting fully parsed response body.
+  console.log(response.result);
+
+  // Extracting response status code.
+  console.log(response.statusCode);
+  // Extracting response headers.
+  console.log(response.headers);
+  // Extracting response body of type `string | Stream`
+  console.log(response.body);
 } catch (error) {
   if (error instanceof ApiError) {
-    const errors = error.result;
-    // const { statusCode, headers } = error;
+    // Extracting response error status code.
+    console.log(error.statusCode);
+    // Extracting response error headers.
+    console.log(error.headers);
+    // Extracting response error body of type `string | Stream`.
+    console.log(error.body);
   }
 }
 ```
@@ -226,7 +291,7 @@ try {
 
 # Get User by Name
 
-Get user by user name
+:information_source: **Note** This endpoint does not require authentication.
 
 ```ts
 async getUserByName(
@@ -244,7 +309,7 @@ async getUserByName(
 
 ## Response Type
 
-[`User`](../../doc/models/user.md)
+This method returns an [`ApiResponse`](../../doc/api-response.md) instance. The `result` property of this instance returns the response data which is of type [`User`](../../doc/models/user.md).
 
 ## Example Usage
 
@@ -252,13 +317,25 @@ async getUserByName(
 const name = 'name0';
 
 try {
-  const { result, ...httpResponse } = await userController.getUserByName(name);
-  // Get more response info...
-  // const { statusCode, headers } = httpResponse;
+  const response = await userController.getUserByName(name);
+
+  // Extracting fully parsed response body.
+  console.log(response.result);
+
+  // Extracting response status code.
+  console.log(response.statusCode);
+  // Extracting response headers.
+  console.log(response.headers);
+  // Extracting response body of type `string | Stream`
+  console.log(response.body);
 } catch (error) {
   if (error instanceof ApiError) {
-    const errors = error.result;
-    // const { statusCode, headers } = error;
+    // Extracting response error status code.
+    console.log(error.statusCode);
+    // Extracting response error headers.
+    console.log(error.headers);
+    // Extracting response error body of type `string | Stream`.
+    console.log(error.body);
   }
 }
 ```
@@ -274,6 +351,8 @@ try {
 # Update User
 
 This can only be done by the logged in user.
+
+:information_source: **Note** This endpoint does not require authentication.
 
 ```ts
 async updateUser(
@@ -307,7 +386,7 @@ async updateUser(
 
 ## Response Type
 
-`void`
+This method returns an [`ApiResponse`](../../doc/api-response.md) instance.
 
 ## Example Usage
 
@@ -331,7 +410,7 @@ const phone = '12345';
 const userStatus = 1;
 
 try {
-  const { result, ...httpResponse } = await userController.updateUser(
+  const response = await userController.updateUser(
     name,
     id,
     username,
@@ -342,12 +421,24 @@ try {
     phone,
     userStatus
   );
-  // Get more response info...
-  // const { statusCode, headers } = httpResponse;
+
+  // Extracting fully parsed response body.
+  console.log(response.result);
+
+  // Extracting response status code.
+  console.log(response.statusCode);
+  // Extracting response headers.
+  console.log(response.headers);
+  // Extracting response body of type `string | Stream`
+  console.log(response.body);
 } catch (error) {
   if (error instanceof ApiError) {
-    const errors = error.result;
-    // const { statusCode, headers } = error;
+    // Extracting response error status code.
+    console.log(error.statusCode);
+    // Extracting response error headers.
+    console.log(error.headers);
+    // Extracting response error body of type `string | Stream`.
+    console.log(error.body);
   }
 }
 ```
@@ -356,6 +447,8 @@ try {
 # Delete User
 
 This can only be done by the logged in user.
+
+:information_source: **Note** This endpoint does not require authentication.
 
 ```ts
 async deleteUser(
@@ -373,7 +466,7 @@ async deleteUser(
 
 ## Response Type
 
-`void`
+This method returns an [`ApiResponse`](../../doc/api-response.md) instance.
 
 ## Example Usage
 
@@ -381,13 +474,25 @@ async deleteUser(
 const name = 'name0';
 
 try {
-  const { result, ...httpResponse } = await userController.deleteUser(name);
-  // Get more response info...
-  // const { statusCode, headers } = httpResponse;
+  const response = await userController.deleteUser(name);
+
+  // Extracting fully parsed response body.
+  console.log(response.result);
+
+  // Extracting response status code.
+  console.log(response.statusCode);
+  // Extracting response headers.
+  console.log(response.headers);
+  // Extracting response body of type `string | Stream`
+  console.log(response.body);
 } catch (error) {
   if (error instanceof ApiError) {
-    const errors = error.result;
-    // const { statusCode, headers } = error;
+    // Extracting response error status code.
+    console.log(error.statusCode);
+    // Extracting response error headers.
+    console.log(error.headers);
+    // Extracting response error body of type `string | Stream`.
+    console.log(error.body);
   }
 }
 ```

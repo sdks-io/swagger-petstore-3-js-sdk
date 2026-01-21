@@ -17,9 +17,9 @@
 
 ```json
 {
-  "code": 130,
-  "type": "type0",
-  "message": "message0"
+  "code": 96,
+  "type": "type8",
+  "message": "message8"
 }
 ```
 

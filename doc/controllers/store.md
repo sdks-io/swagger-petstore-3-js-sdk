@@ -38,19 +38,31 @@ async getInventory(
 
 ## Response Type
 
-`Record<string, number>`
+This method returns an [`ApiResponse`](../../doc/api-response.md) instance. The `result` property of this instance returns the response data which is of type `Record<string, number>`.
 
 ## Example Usage
 
 ```ts
 try {
-  const { result, ...httpResponse } = await storeController.getInventory();
-  // Get more response info...
-  // const { statusCode, headers } = httpResponse;
+  const response = await storeController.getInventory();
+
+  // Extracting fully parsed response body.
+  console.log(response.result);
+
+  // Extracting response status code.
+  console.log(response.statusCode);
+  // Extracting response headers.
+  console.log(response.headers);
+  // Extracting response body of type `string | Stream`
+  console.log(response.body);
 } catch (error) {
   if (error instanceof ApiError) {
-    const errors = error.result;
-    // const { statusCode, headers } = error;
+    // Extracting response error status code.
+    console.log(error.statusCode);
+    // Extracting response error headers.
+    console.log(error.headers);
+    // Extracting response error body of type `string | Stream`.
+    console.log(error.body);
   }
 }
 ```
@@ -59,6 +71,8 @@ try {
 # Place Order
 
 Place a new order in the store
+
+:information_source: **Note** This endpoint does not require authentication.
 
 ```ts
 async placeOrder(
@@ -80,13 +94,13 @@ async placeOrder(
 | `petId` | `bigint \| undefined` | Form, Optional | - |
 | `quantity` | `number \| undefined` | Form, Optional | - |
 | `shipDate` | `string \| undefined` | Form, Optional | - |
-| `orderStatus` | [`OrderStatusEnum \| undefined`](../../doc/models/order-status-enum.md) | Form, Optional | Order Status<br>**Default**: `OrderStatusEnum.Approved` |
+| `orderStatus` | [`OrderStatusEnum \| undefined`](../../doc/models/order-status-enum.md) | Form, Optional | Order Status<br><br>**Default**: `OrderStatusEnum.Approved` |
 | `complete` | `boolean \| undefined` | Form, Optional | - |
 | `requestOptions` | `RequestOptions \| undefined` | Optional | Pass additional request options. |
 
 ## Response Type
 
-[`Order`](../../doc/models/order.md)
+This method returns an [`ApiResponse`](../../doc/api-response.md) instance. The `result` property of this instance returns the response data which is of type [`Order`](../../doc/models/order.md).
 
 ## Example Usage
 
@@ -104,7 +118,7 @@ const orderStatus = OrderStatusEnum.Approved;
 const complete = true;
 
 try {
-  const { result, ...httpResponse } = await storeController.placeOrder(
+  const response = await storeController.placeOrder(
     id,
     petId,
     quantity,
@@ -112,12 +126,24 @@ try {
     orderStatus,
     complete
   );
-  // Get more response info...
-  // const { statusCode, headers } = httpResponse;
+
+  // Extracting fully parsed response body.
+  console.log(response.result);
+
+  // Extracting response status code.
+  console.log(response.statusCode);
+  // Extracting response headers.
+  console.log(response.headers);
+  // Extracting response body of type `string | Stream`
+  console.log(response.body);
 } catch (error) {
   if (error instanceof ApiError) {
-    const errors = error.result;
-    // const { statusCode, headers } = error;
+    // Extracting response error status code.
+    console.log(error.statusCode);
+    // Extracting response error headers.
+    console.log(error.headers);
+    // Extracting response error body of type `string | Stream`.
+    console.log(error.body);
   }
 }
 ```
@@ -132,6 +158,8 @@ try {
 # Get Order by Id
 
 For valid response try integer IDs with value <= 5 or > 10. Other values will generate exceptions.
+
+:information_source: **Note** This endpoint does not require authentication.
 
 ```ts
 async getOrderById(
@@ -149,7 +177,7 @@ async getOrderById(
 
 ## Response Type
 
-[`Order`](../../doc/models/order.md)
+This method returns an [`ApiResponse`](../../doc/api-response.md) instance. The `result` property of this instance returns the response data which is of type [`Order`](../../doc/models/order.md).
 
 ## Example Usage
 
@@ -157,13 +185,25 @@ async getOrderById(
 const orderId = BigInt(62);
 
 try {
-  const { result, ...httpResponse } = await storeController.getOrderById(orderId);
-  // Get more response info...
-  // const { statusCode, headers } = httpResponse;
+  const response = await storeController.getOrderById(orderId);
+
+  // Extracting fully parsed response body.
+  console.log(response.result);
+
+  // Extracting response status code.
+  console.log(response.statusCode);
+  // Extracting response headers.
+  console.log(response.headers);
+  // Extracting response body of type `string | Stream`
+  console.log(response.body);
 } catch (error) {
   if (error instanceof ApiError) {
-    const errors = error.result;
-    // const { statusCode, headers } = error;
+    // Extracting response error status code.
+    console.log(error.statusCode);
+    // Extracting response error headers.
+    console.log(error.headers);
+    // Extracting response error body of type `string | Stream`.
+    console.log(error.body);
   }
 }
 ```
@@ -179,6 +219,8 @@ try {
 # Delete Order
 
 For valid response try integer IDs with value < 1000. Anything above 1000 or nonintegers will generate API errors
+
+:information_source: **Note** This endpoint does not require authentication.
 
 ```ts
 async deleteOrder(
@@ -196,7 +238,7 @@ async deleteOrder(
 
 ## Response Type
 
-`void`
+This method returns an [`ApiResponse`](../../doc/api-response.md) instance.
 
 ## Example Usage
 
@@ -204,13 +246,25 @@ async deleteOrder(
 const orderId = BigInt(62);
 
 try {
-  const { result, ...httpResponse } = await storeController.deleteOrder(orderId);
-  // Get more response info...
-  // const { statusCode, headers } = httpResponse;
+  const response = await storeController.deleteOrder(orderId);
+
+  // Extracting fully parsed response body.
+  console.log(response.result);
+
+  // Extracting response status code.
+  console.log(response.statusCode);
+  // Extracting response headers.
+  console.log(response.headers);
+  // Extracting response body of type `string | Stream`
+  console.log(response.body);
 } catch (error) {
   if (error instanceof ApiError) {
-    const errors = error.result;
-    // const { statusCode, headers } = error;
+    // Extracting response error status code.
+    console.log(error.statusCode);
+    // Extracting response error headers.
+    console.log(error.headers);
+    // Extracting response error body of type `string | Stream`.
+    console.log(error.body);
   }
 }
 ```

@@ -11,7 +11,7 @@ pet status in the store
 
 | Name |
 |  --- |
-| `available` |
-| `pending` |
-| `sold` |
+| `Available` |
+| `Pending` |
+| `Sold` |
 

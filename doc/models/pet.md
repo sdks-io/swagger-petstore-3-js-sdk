@@ -21,27 +21,13 @@
 ```json
 {
   "name": "doggie",
-  "photoUrls": [
-    "photoUrls5",
-    "photoUrls6",
-    "photoUrls7"
-  ],
+  "photoUrls": null,
   "id": 10,
-  "category": {
-    "id": 232,
-    "name": "name2"
-  },
+  "category": null,
   "tags": [
-    {
-      "id": 239,
-      "name": "name5"
-    },
-    {
-      "id": 240,
-      "name": "name6"
-    }
+    null
   ],
-  "petStatus": "pending"
+  "petStatus": "sold"
 }
 ```
 

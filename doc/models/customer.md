@@ -20,12 +20,9 @@
   "id": 100000,
   "username": "fehguy",
   "address": [
-    {
-      "street": "street4",
-      "city": "city4",
-      "state": "state0",
-      "zip": "zip8"
-    }
+    null,
+    {},
+    {}
   ]
 }
 ```

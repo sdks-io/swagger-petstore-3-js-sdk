@@ -12,10 +12,10 @@ import {
   optional,
   Schema,
   string,
-} from '../schema';
-import { Category, categorySchema } from './category';
-import { PetStatusEnum, petStatusEnumSchema } from './petStatusEnum';
-import { Tag, tagSchema } from './tag';
+} from '../schema.js';
+import { Category, categorySchema } from './category.js';
+import { PetStatusEnum, petStatusEnumSchema } from './petStatusEnum.js';
+import { Tag, tagSchema } from './tag.js';
 
 export interface Pet {
   name: string;
@@ -27,11 +27,13 @@ export interface Pet {
   petStatus?: PetStatusEnum;
 }
 
-export const petSchema: Schema<Pet> = object({
-  name: ['name', string()],
-  photoUrls: ['photoUrls', array(string())],
-  id: ['id', optional(bigint())],
-  category: ['category', optional(lazy(() => categorySchema))],
-  tags: ['tags', optional(array(lazy(() => tagSchema)))],
-  petStatus: ['petStatus', optional(petStatusEnumSchema)],
-});
+export const petSchema: Schema<Pet> = lazy(() =>
+  object({
+    name: ['name', string()],
+    photoUrls: ['photoUrls', array(string())],
+    id: ['id', optional(bigint())],
+    category: ['category', optional(categorySchema)],
+    tags: ['tags', optional(array(tagSchema))],
+    petStatus: ['petStatus', optional(petStatusEnumSchema)],
+  })
+);

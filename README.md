@@ -21,67 +21,125 @@ Find out more about Swagger: [http://swagger.io](http://swagger.io)
 
 Run the following command from your project directory to install the package from npm:
 
-```ts
-npm install sdksio-swagger-petstore-3-sdk@1.0.0
+```bash
+npm install petstore-test-sdk@1.0.1
 ```
 
-For additional package details, see the [Npm page for the sdksio-swagger-petstore-3-sdk@1.0.0  npm](https://www.npmjs.com/package/sdksio-swagger-petstore-3-sdk/v/1.0.0).
+For additional package details, see the [Npm page for the petstore-test-sdk@1.0.1 npm](https://www.npmjs.com/package/petstore-test-sdk/v/1.0.1).
+
+## Test the SDK
+
+To validate the functionality of this SDK, you can execute all tests located in the `test` directory. This SDK utilizes `Jest` as both the testing framework and test runner.
+
+To run the tests, navigate to the root directory of the SDK and execute the following command:
+
+```bash
+npm run test
+```
+
+Or you can also run tests with coverage report:
+
+```bash
+npm run test:coverage
+```
 
 ## Initialize the API Client
 
-**_Note:_** Documentation for the client can be found [here.](https://www.github.com/sdks-io/swagger-petstore-3-js-sdk/tree/1.0.0/doc/client.md)
+**_Note:_** Documentation for the client can be found [here.](https://www.github.com/sdks-io/swagger-petstore-3-js-sdk/tree/1.0.1/doc/client.md)
 
 The following parameters are configurable for the API Client:
 
 | Parameter | Type | Description |
 |  --- | --- | --- |
-| `timeout` | `number` | Timeout for API calls.<br>*Default*: `0` |
-| `httpClientOptions` | `Partial<HttpClientOptions>` | Stable configurable http client options. |
-| `unstableHttpClientOptions` | `any` | Unstable configurable http client options. |
-| `apiKey` | `string` |  |
-
-### HttpClientOptions
-
-| Parameter | Type | Description |
-|  --- | --- | --- |
-| `timeout` | `number` | Timeout in milliseconds. |
-| `httpAgent` | `any` | Custom http agent to be used when performing http requests. |
-| `httpsAgent` | `any` | Custom https agent to be used when performing http requests. |
-| `retryConfig` | `Partial<RetryConfiguration>` | Configurations to retry requests. |
-
-### RetryConfiguration
-
-| Parameter | Type | Description |
-|  --- | --- | --- |
-| `maxNumberOfRetries` | `number` | Maximum number of retries. <br> *Default*: `0` |
-| `retryOnTimeout` | `boolean` | Whether to retry on request timeout. <br> *Default*: `true` |
-| `retryInterval` | `number` | Interval before next retry. Used in calculation of wait time for next request in case of failure. <br> *Default*: `1` |
-| `maximumRetryWaitTime` | `number` | Overall wait time for the requests getting retried. <br> *Default*: `0` |
-| `backoffFactor` | `number` | Used in calculation of wait time for next request in case of failure. <br> *Default*: `2` |
-| `httpStatusCodesToRetry` | `number[]` | Http status codes to retry against. <br> *Default*: `[408, 413, 429, 500, 502, 503, 504, 521, 522, 524]` |
-| `httpMethodsToRetry` | `HttpMethod[]` | Http methods to retry against. <br> *Default*: `['GET', 'PUT']` |
+| timeout | `number` | Timeout for API calls.<br>*Default*: `0` |
+| httpClientOptions | [`Partial<HttpClientOptions>`](https://www.github.com/sdks-io/swagger-petstore-3-js-sdk/tree/1.0.1/doc/http-client-options.md) | Stable configurable http client options. |
+| unstableHttpClientOptions | `any` | Unstable configurable http client options. |
+| customHeaderAuthenticationCredentials | [`CustomHeaderAuthenticationCredentials`](https://www.github.com/sdks-io/swagger-petstore-3-js-sdk/tree/1.0.1/doc/auth/custom-header-signature.md) | The credential object for customHeaderAuthentication |
 
 The API client can be initialized as follows:
 
+### Code-Based Client Initialization
+
 ```ts
+import { Client } from 'petstore-test-sdk';
+
 const client = new Client({
+  customHeaderAuthenticationCredentials: {
+    'api_key': 'api_key'
+  },
   timeout: 0,
-  apiKey: 'api_key',
 });
 ```
 
+### Configuration-Based Client Initialization
+
+```ts
+import * as path from 'path';
+import * as fs from 'fs';
+import { Client } from 'petstore-test-sdk';
+
+// Provide absolute path for the configuration file
+const absolutePath = path.resolve('./config.json');
+
+// Read the configuration file content
+const fileContent = fs.readFileSync(absolutePath, 'utf-8');
+
+// Initialize client from JSON configuration content
+const client = Client.fromJsonConfig(fileContent);
+```
+
+See the [Configuration-Based Client Initialization](https://www.github.com/sdks-io/swagger-petstore-3-js-sdk/tree/1.0.1/doc/configuration-based-client-initialization.md) section for details.
+
+### Environment-Based Client Initialization
+
+```ts
+import * as dotenv from 'dotenv';
+import * as path from 'path';
+import * as fs from 'fs';
+import { Client } from 'petstore-test-sdk';
+
+// Optional - Provide absolute path for the .env file
+const absolutePath = path.resolve('./.env');
+
+if (fs.existsSync(absolutePath)) {
+  // Load environment variables from .env file
+  dotenv.config({ path: absolutePath, override: true });
+}
+
+// Initialize client using environment variables
+const client = Client.fromEnvironment(process.env);
+```
+
+See the [Environment-Based Client Initialization](https://www.github.com/sdks-io/swagger-petstore-3-js-sdk/tree/1.0.1/doc/environment-based-client-initialization.md) section for details.
+
 ## Authorization
 
-This API uses `Custom Header Signature`.
+This API uses the following authentication schemes.
+
+* [`api_key (Custom Header Signature)`](https://www.github.com/sdks-io/swagger-petstore-3-js-sdk/tree/1.0.1/doc/auth/custom-header-signature.md)
 
 ## List of APIs
 
-* [Pet](https://www.github.com/sdks-io/swagger-petstore-3-js-sdk/tree/1.0.0/doc/controllers/pet.md)
-* [Store](https://www.github.com/sdks-io/swagger-petstore-3-js-sdk/tree/1.0.0/doc/controllers/store.md)
-* [User](https://www.github.com/sdks-io/swagger-petstore-3-js-sdk/tree/1.0.0/doc/controllers/user.md)
+* [Pet](https://www.github.com/sdks-io/swagger-petstore-3-js-sdk/tree/1.0.1/doc/controllers/pet.md)
+* [Store](https://www.github.com/sdks-io/swagger-petstore-3-js-sdk/tree/1.0.1/doc/controllers/store.md)
+* [User](https://www.github.com/sdks-io/swagger-petstore-3-js-sdk/tree/1.0.1/doc/controllers/user.md)
 
-## Classes Documentation
+## SDK Infrastructure
 
-* [ApiResponse](https://www.github.com/sdks-io/swagger-petstore-3-js-sdk/tree/1.0.0/doc/api-response.md)
-* [ApiError](https://www.github.com/sdks-io/swagger-petstore-3-js-sdk/tree/1.0.0/doc/api-error.md)
+### Configuration
+
+* [HttpClientOptions](https://www.github.com/sdks-io/swagger-petstore-3-js-sdk/tree/1.0.1/doc/http-client-options.md)
+* [RetryConfiguration](https://www.github.com/sdks-io/swagger-petstore-3-js-sdk/tree/1.0.1/doc/retry-configuration.md)
+* [ProxySettings](https://www.github.com/sdks-io/swagger-petstore-3-js-sdk/tree/1.0.1/doc/proxy-settings.md)
+* [Configuration-Based Client Initialization](https://www.github.com/sdks-io/swagger-petstore-3-js-sdk/tree/1.0.1/doc/configuration-based-client-initialization.md)
+* [Environment-Based Client Initialization](https://www.github.com/sdks-io/swagger-petstore-3-js-sdk/tree/1.0.1/doc/environment-based-client-initialization.md)
+
+### HTTP
+
+* [HttpRequest](https://www.github.com/sdks-io/swagger-petstore-3-js-sdk/tree/1.0.1/doc/http-request.md)
+
+### Utilities
+
+* [ApiResponse](https://www.github.com/sdks-io/swagger-petstore-3-js-sdk/tree/1.0.1/doc/api-response.md)
+* [ApiError](https://www.github.com/sdks-io/swagger-petstore-3-js-sdk/tree/1.0.1/doc/api-error.md)
 

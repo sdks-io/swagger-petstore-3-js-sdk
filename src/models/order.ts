@@ -12,8 +12,8 @@ import {
   optional,
   Schema,
   string,
-} from '../schema';
-import { OrderStatusEnum, orderStatusEnumSchema } from './orderStatusEnum';
+} from '../schema.js';
+import { OrderStatusEnum, orderStatusEnumSchema } from './orderStatusEnum.js';
 
 export interface Order {
   id?: bigint;

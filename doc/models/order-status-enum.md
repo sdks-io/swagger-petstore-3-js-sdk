@@ -11,7 +11,7 @@ Order Status
 
 | Name |
 |  --- |
-| `placed` |
-| `approved` |
-| `delivered` |
+| `Placed` |
+| `Approved` |
+| `Delivered` |
 

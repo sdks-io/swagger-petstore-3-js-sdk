@@ -13,7 +13,7 @@
 | `petId` | `bigint \| undefined` | Optional | - |
 | `quantity` | `number \| undefined` | Optional | - |
 | `shipDate` | `string \| undefined` | Optional | - |
-| `orderStatus` | [`OrderStatusEnum \| undefined`](../../doc/models/order-status-enum.md) | Optional | Order Status<br>**Default**: `OrderStatusEnum.Approved` |
+| `orderStatus` | [`OrderStatusEnum \| undefined`](../../doc/models/order-status-enum.md) | Optional | Order Status<br><br>**Default**: `OrderStatusEnum.Approved` |
 | `complete` | `boolean \| undefined` | Optional | - |
 
 ## Example (as JSON)

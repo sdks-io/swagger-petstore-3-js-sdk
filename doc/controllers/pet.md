@@ -28,6 +28,8 @@ const petController = new PetController(client);
 
 Update an existing pet by Id
 
+:information_source: **Note** This endpoint does not require authentication.
+
 ```ts
 async updatePet(
   name: string,
@@ -54,7 +56,7 @@ async updatePet(
 
 ## Response Type
 
-[`Pet`](../../doc/models/pet.md)
+This method returns an [`ApiResponse`](../../doc/api-response.md) instance. The `result` property of this instance returns the response data which is of type [`Pet`](../../doc/models/pet.md).
 
 ## Example Usage
 
@@ -69,24 +71,71 @@ const photoUrls: string[] = [
 
 const id = BigInt(10);
 
+const category: Category = {
+  id: BigInt(1),
+  name: 'Dogs',
+};
+
 const tags: Tag[] = [
-  {}
+  {
+  }
 ];
 
 try {
-  const { result, ...httpResponse } = await petController.updatePet(
+  const response = await petController.updatePet(
     name,
     photoUrls,
     id,
+    category,
     tags
   );
-  // Get more response info...
-  // const { statusCode, headers } = httpResponse;
+
+  // Extracting fully parsed response body.
+  console.log(response.result);
+
+  // Extracting response status code.
+  console.log(response.statusCode);
+  // Extracting response headers.
+  console.log(response.headers);
+  // Extracting response body of type `string | Stream`
+  console.log(response.body);
 } catch (error) {
   if (error instanceof ApiError) {
-    const errors = error.result;
-    // const { statusCode, headers } = error;
+    // Extracting response error status code.
+    console.log(error.statusCode);
+    // Extracting response error headers.
+    console.log(error.headers);
+    // Extracting response error body of type `string | Stream`.
+    console.log(error.body);
   }
+}
+```
+
+## Example Response *(as JSON)*
+
+```json
+{
+  "name": "Rex",
+  "photoUrls": [
+    "https://example.com/photo1.jpg",
+    "https://example.com/photo2.jpg"
+  ],
+  "id": 123,
+  "category": {
+    "id": 1,
+    "name": "Dogs"
+  },
+  "tags": [
+    {
+      "id": 1,
+      "name": "friendly"
+    },
+    {
+      "id": 2,
+      "name": "playful"
+    }
+  ],
+  "petStatus": "available"
 }
 ```
 
@@ -102,6 +151,8 @@ try {
 # Add Pet
 
 Add a new pet to the store
+
+:information_source: **Note** This endpoint does not require authentication.
 
 ```ts
 async addPet(
@@ -129,7 +180,7 @@ async addPet(
 
 ## Response Type
 
-[`Pet`](../../doc/models/pet.md)
+This method returns an [`ApiResponse`](../../doc/api-response.md) instance. The `result` property of this instance returns the response data which is of type [`Pet`](../../doc/models/pet.md).
 
 ## Example Usage
 
@@ -137,31 +188,81 @@ async addPet(
 const name = 'doggie';
 
 const photoUrls: string[] = [
-  'photoUrls5',
-  'photoUrls6',
-  'photoUrls7'
+  'https://example.com/photo2.jpg'
 ];
 
 const id = BigInt(10);
 
+const category: Category = {
+  id: BigInt(232),
+  name: 'name2',
+};
+
 const tags: Tag[] = [
-  {}
+  {
+    id: BigInt(26),
+    name: 'name0',
+  }
 ];
 
+const petStatus = PetStatusEnum.Sold;
+
 try {
-  const { result, ...httpResponse } = await petController.addPet(
+  const response = await petController.addPet(
     name,
     photoUrls,
     id,
-    tags
+    category,
+    tags,
+    petStatus
   );
-  // Get more response info...
-  // const { statusCode, headers } = httpResponse;
+
+  // Extracting fully parsed response body.
+  console.log(response.result);
+
+  // Extracting response status code.
+  console.log(response.statusCode);
+  // Extracting response headers.
+  console.log(response.headers);
+  // Extracting response body of type `string | Stream`
+  console.log(response.body);
 } catch (error) {
   if (error instanceof ApiError) {
-    const errors = error.result;
-    // const { statusCode, headers } = error;
+    // Extracting response error status code.
+    console.log(error.statusCode);
+    // Extracting response error headers.
+    console.log(error.headers);
+    // Extracting response error body of type `string | Stream`.
+    console.log(error.body);
   }
+}
+```
+
+## Example Response *(as JSON)*
+
+```json
+{
+  "name": "Rex",
+  "photoUrls": [
+    "https://example.com/photo1.jpg",
+    "https://example.com/photo2.jpg"
+  ],
+  "id": 123,
+  "category": {
+    "id": 1,
+    "name": "Dogs"
+  },
+  "tags": [
+    {
+      "id": 1,
+      "name": "friendly"
+    },
+    {
+      "id": 2,
+      "name": "playful"
+    }
+  ],
+  "petStatus": "available"
 }
 ```
 
@@ -176,6 +277,8 @@ try {
 
 Multiple status values can be provided with comma separated strings
 
+:information_source: **Note** This endpoint does not require authentication.
+
 ```ts
 async findPetsByStatus(
   status?: StatusEnum,
@@ -187,12 +290,12 @@ async findPetsByStatus(
 
 | Parameter | Type | Tags | Description |
 |  --- | --- | --- | --- |
-| `status` | [`StatusEnum \| undefined`](../../doc/models/status-enum.md) | Query, Optional | Status values that need to be considered for filter<br>**Default**: `StatusEnum.Available` |
+| `status` | [`StatusEnum \| undefined`](../../doc/models/status-enum.md) | Query, Optional | Status values that need to be considered for filter<br><br>**Default**: `StatusEnum.Available` |
 | `requestOptions` | `RequestOptions \| undefined` | Optional | Pass additional request options. |
 
 ## Response Type
 
-[`Pet[]`](../../doc/models/pet.md)
+This method returns an [`ApiResponse`](../../doc/api-response.md) instance. The `result` property of this instance returns the response data which is of type [`Pet[]`](../../doc/models/pet.md).
 
 ## Example Usage
 
@@ -200,17 +303,72 @@ async findPetsByStatus(
 const status = StatusEnum.Available;
 
 try {
-  const { result, ...httpResponse } = await petController.findPetsByStatus(
-    status
-  );
-  // Get more response info...
-  // const { statusCode, headers } = httpResponse;
+  const response = await petController.findPetsByStatus(status);
+
+  // Extracting fully parsed response body.
+  console.log(response.result);
+
+  // Extracting response status code.
+  console.log(response.statusCode);
+  // Extracting response headers.
+  console.log(response.headers);
+  // Extracting response body of type `string | Stream`
+  console.log(response.body);
 } catch (error) {
   if (error instanceof ApiError) {
-    const errors = error.result;
-    // const { statusCode, headers } = error;
+    // Extracting response error status code.
+    console.log(error.statusCode);
+    // Extracting response error headers.
+    console.log(error.headers);
+    // Extracting response error body of type `string | Stream`.
+    console.log(error.body);
   }
 }
+```
+
+## Example Response *(as JSON)*
+
+```json
+[
+  {
+    "id": 10,
+    "name": "doggie",
+    "photoUrls": [
+      "photoUrls5",
+      "photoUrls6"
+    ],
+    "category": {
+      "id": 232,
+      "name": "name2"
+    },
+    "tags": [
+      {
+        "id": 26,
+        "name": "name0"
+      }
+    ],
+    "petStatus": "sold"
+  },
+  {
+    "id": 11,
+    "name": "kitty",
+    "photoUrls": [
+      "photoUrls7",
+      "photoUrls8"
+    ],
+    "category": {
+      "id": 233,
+      "name": "name3"
+    },
+    "tags": [
+      {
+        "id": 27,
+        "name": "name1"
+      }
+    ],
+    "petStatus": "available"
+  }
+]
 ```
 
 ## Errors
@@ -223,6 +381,8 @@ try {
 # Find Pets by Tags
 
 Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3 for testing.
+
+:information_source: **Note** This endpoint does not require authentication.
 
 ```ts
 async findPetsByTags(
@@ -240,21 +400,78 @@ async findPetsByTags(
 
 ## Response Type
 
-[`Pet[]`](../../doc/models/pet.md)
+This method returns an [`ApiResponse`](../../doc/api-response.md) instance. The `result` property of this instance returns the response data which is of type [`Pet[]`](../../doc/models/pet.md).
 
 ## Example Usage
 
 ```ts
 try {
-  const { result, ...httpResponse } = await petController.findPetsByTags();
-  // Get more response info...
-  // const { statusCode, headers } = httpResponse;
+  const response = await petController.findPetsByTags();
+
+  // Extracting fully parsed response body.
+  console.log(response.result);
+
+  // Extracting response status code.
+  console.log(response.statusCode);
+  // Extracting response headers.
+  console.log(response.headers);
+  // Extracting response body of type `string | Stream`
+  console.log(response.body);
 } catch (error) {
   if (error instanceof ApiError) {
-    const errors = error.result;
-    // const { statusCode, headers } = error;
+    // Extracting response error status code.
+    console.log(error.statusCode);
+    // Extracting response error headers.
+    console.log(error.headers);
+    // Extracting response error body of type `string | Stream`.
+    console.log(error.body);
   }
 }
+```
+
+## Example Response *(as JSON)*
+
+```json
+[
+  {
+    "id": 10,
+    "name": "doggie",
+    "photoUrls": [
+      "photoUrls5",
+      "photoUrls6"
+    ],
+    "category": {
+      "id": 232,
+      "name": "name2"
+    },
+    "tags": [
+      {
+        "id": 26,
+        "name": "name0"
+      }
+    ],
+    "petStatus": "sold"
+  },
+  {
+    "id": 11,
+    "name": "kitty",
+    "photoUrls": [
+      "photoUrls7",
+      "photoUrls8"
+    ],
+    "category": {
+      "id": 233,
+      "name": "name3"
+    },
+    "tags": [
+      {
+        "id": 27,
+        "name": "name1"
+      }
+    ],
+    "petStatus": "available"
+  }
+]
 ```
 
 ## Errors
@@ -284,7 +501,7 @@ async getPetById(
 
 ## Response Type
 
-[`Pet`](../../doc/models/pet.md)
+This method returns an [`ApiResponse`](../../doc/api-response.md) instance. The `result` property of this instance returns the response data which is of type [`Pet`](../../doc/models/pet.md).
 
 ## Example Usage
 
@@ -292,14 +509,54 @@ async getPetById(
 const petId = BigInt(152);
 
 try {
-  const { result, ...httpResponse } = await petController.getPetById(petId);
-  // Get more response info...
-  // const { statusCode, headers } = httpResponse;
+  const response = await petController.getPetById(petId);
+
+  // Extracting fully parsed response body.
+  console.log(response.result);
+
+  // Extracting response status code.
+  console.log(response.statusCode);
+  // Extracting response headers.
+  console.log(response.headers);
+  // Extracting response body of type `string | Stream`
+  console.log(response.body);
 } catch (error) {
   if (error instanceof ApiError) {
-    const errors = error.result;
-    // const { statusCode, headers } = error;
+    // Extracting response error status code.
+    console.log(error.statusCode);
+    // Extracting response error headers.
+    console.log(error.headers);
+    // Extracting response error body of type `string | Stream`.
+    console.log(error.body);
   }
+}
+```
+
+## Example Response *(as JSON)*
+
+```json
+{
+  "name": "Rex",
+  "photoUrls": [
+    "https://example.com/photo1.jpg",
+    "https://example.com/photo2.jpg"
+  ],
+  "id": 123,
+  "category": {
+    "id": 1,
+    "name": "Dogs"
+  },
+  "tags": [
+    {
+      "id": 1,
+      "name": "friendly"
+    },
+    {
+      "id": 2,
+      "name": "playful"
+    }
+  ],
+  "petStatus": "available"
 }
 ```
 
@@ -313,7 +570,7 @@ try {
 
 # Update Pet With Form
 
-Updates a pet in the store with form data
+:information_source: **Note** This endpoint does not require authentication.
 
 ```ts
 async updatePetWithForm(
@@ -335,7 +592,7 @@ async updatePetWithForm(
 
 ## Response Type
 
-`void`
+This method returns an [`ApiResponse`](../../doc/api-response.md) instance.
 
 ## Example Usage
 
@@ -343,13 +600,25 @@ async updatePetWithForm(
 const petId = BigInt(152);
 
 try {
-  const { result, ...httpResponse } = await petController.updatePetWithForm(petId);
-  // Get more response info...
-  // const { statusCode, headers } = httpResponse;
+  const response = await petController.updatePetWithForm(petId);
+
+  // Extracting fully parsed response body.
+  console.log(response.result);
+
+  // Extracting response status code.
+  console.log(response.statusCode);
+  // Extracting response headers.
+  console.log(response.headers);
+  // Extracting response body of type `string | Stream`
+  console.log(response.body);
 } catch (error) {
   if (error instanceof ApiError) {
-    const errors = error.result;
-    // const { statusCode, headers } = error;
+    // Extracting response error status code.
+    console.log(error.statusCode);
+    // Extracting response error headers.
+    console.log(error.headers);
+    // Extracting response error body of type `string | Stream`.
+    console.log(error.body);
   }
 }
 ```
@@ -364,6 +633,8 @@ try {
 # Delete Pet
 
 delete a pet
+
+:information_source: **Note** This endpoint does not require authentication.
 
 ```ts
 async deletePet(
@@ -383,7 +654,7 @@ async deletePet(
 
 ## Response Type
 
-`void`
+This method returns an [`ApiResponse`](../../doc/api-response.md) instance.
 
 ## Example Usage
 
@@ -391,13 +662,25 @@ async deletePet(
 const petId = BigInt(152);
 
 try {
-  const { result, ...httpResponse } = await petController.deletePet(petId);
-  // Get more response info...
-  // const { statusCode, headers } = httpResponse;
+  const response = await petController.deletePet(petId);
+
+  // Extracting fully parsed response body.
+  console.log(response.result);
+
+  // Extracting response status code.
+  console.log(response.statusCode);
+  // Extracting response headers.
+  console.log(response.headers);
+  // Extracting response body of type `string | Stream`
+  console.log(response.body);
 } catch (error) {
   if (error instanceof ApiError) {
-    const errors = error.result;
-    // const { statusCode, headers } = error;
+    // Extracting response error status code.
+    console.log(error.statusCode);
+    // Extracting response error headers.
+    console.log(error.headers);
+    // Extracting response error body of type `string | Stream`.
+    console.log(error.body);
   }
 }
 ```
@@ -411,7 +694,7 @@ try {
 
 # Upload File
 
-uploads an image
+:information_source: **Note** This endpoint does not require authentication.
 
 ```ts
 async uploadFile(
@@ -433,7 +716,7 @@ async uploadFile(
 
 ## Response Type
 
-[`PetImage`](../../doc/models/pet-image.md)
+This method returns an [`ApiResponse`](../../doc/api-response.md) instance. The `result` property of this instance returns the response data which is of type [`PetImage`](../../doc/models/pet-image.md).
 
 ## Example Usage
 
@@ -441,14 +724,36 @@ async uploadFile(
 const petId = BigInt(152);
 
 try {
-  const { result, ...httpResponse } = await petController.uploadFile(petId);
-  // Get more response info...
-  // const { statusCode, headers } = httpResponse;
+  const response = await petController.uploadFile(petId);
+
+  // Extracting fully parsed response body.
+  console.log(response.result);
+
+  // Extracting response status code.
+  console.log(response.statusCode);
+  // Extracting response headers.
+  console.log(response.headers);
+  // Extracting response body of type `string | Stream`
+  console.log(response.body);
 } catch (error) {
   if (error instanceof ApiError) {
-    const errors = error.result;
-    // const { statusCode, headers } = error;
+    // Extracting response error status code.
+    console.log(error.statusCode);
+    // Extracting response error headers.
+    console.log(error.headers);
+    // Extracting response error body of type `string | Stream`.
+    console.log(error.body);
   }
+}
+```
+
+## Example Response *(as JSON)*
+
+```json
+{
+  "code": 200,
+  "type": "unknown",
+  "message": "additionalMetadata"
 }
 ```
 

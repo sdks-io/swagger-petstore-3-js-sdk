@@ -1,10 +1,13 @@
-module.exports = {
+/** @type {import('jest').Config} */
+const config = {
   testEnvironment: 'node',
   preset: 'ts-jest',
-  globals: {
-    __DEV__: true,
-    'ts-jest': {
-      tsConfig: 'tsconfig.base.json',
-    },
+  transform: {
+    '^.+\\.tsx?$': ['ts-jest', { tsconfig: 'tsconfig.base.json' }],
+  },
+  moduleNameMapper: {
+    "^(\\.{1,2}/.*)\\.js$": "$1",
   },
 };
+
+module.exports = config;
